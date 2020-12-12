@@ -1,4 +1,5 @@
 var playerPosition = 0;
+var previousPosition = 0;
 
 // Ladder functionality
 ladder = (diceRollResult) => playerPosition + diceRollResult;
@@ -7,10 +8,11 @@ ladder = (diceRollResult) => playerPosition + diceRollResult;
 snake = (diceRollResult) => playerPosition - diceRollResult;
 
 /**
- *@description Here Snake and Ladder game for the sing player
+ *@description Here Snake and Ladder game for the single player
  *loop will itterate till 100 position
  * */
-while (playerPosition <= 100) {
+while (playerPosition != 100) {
+    previousPosition = playerPosition;
     console.log("welcome to Snake and Ladder Game");
     console.log("dice is rolling to get number....");
     diceRollResult = (Math.floor(Math.random() * 10) % 6 + 1);
@@ -21,7 +23,6 @@ while (playerPosition <= 100) {
     // Snake and Ladder Evaluation
     switch (optionToPlay) {
         case 0:
-           // currentPosition = playerPosition;
             console.log("no play");
             console.log("updated player positon- " + playerPosition);
             break;
@@ -41,7 +42,14 @@ while (playerPosition <= 100) {
 
     /**
     * Checking the player position whether it is less than 0 
-    * then do some action 
+    * if yes then do some action 
     */
     (playerPosition < 0) ? playerPosition = 0 : playerPosition;
+
+    /**
+  * Checking the player position whether it is greater than 100 
+  * if yes then do some action 
+  */
+    (playerPosition > 100) ? playerPosition = previousPosition : playerPosition;
+
 }
