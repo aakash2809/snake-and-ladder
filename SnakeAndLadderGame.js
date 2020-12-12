@@ -1,5 +1,8 @@
 const WIN_POSITION = 100;
 const START_POSITION = 0;
+const NO_PLAY = 0;
+const LADDER = 1;
+const SNAKE = 2;
 
 var numberOfRolls = 0;
 var playerPosition = 0;
@@ -12,14 +15,13 @@ ladder = (diceRollResult) => playerPosition + diceRollResult;
 snake = (diceRollResult) => playerPosition - diceRollResult;
 
 /**
- *@description Here Snake and Ladder game for the single player
+ * Here Snake and Ladder game for the single player
  *loop will itterate till WIN_POSITION position
  * */
-main = () => {
+playGame = () => {
     while (playerPosition != WIN_POSITION) {
         previousPosition = playerPosition;
         console.log("welcome to Snake and Ladder Game");
-        console.log("dice is rolling to get number....");
         diceRollResult = (Math.floor(Math.random() * 10) % 6 + 1);
         console.log("dice rolling result is- " + diceRollResult);
 
@@ -27,16 +29,16 @@ main = () => {
 
         // Snake and Ladder Evaluation
         switch (optionToPlay) {
-            case 0:
+            case NO_PLAY :
                 console.log("no play");
                 console.log("updated player positon- " + playerPosition);
                 break;
-            case 1:
+            case LADDER:
                 playerPosition = ladder(diceRollResult);
                 console.log("found ladder");
                 console.log("updated player positon- " + playerPosition);
                 break;
-            case 2:
+            case SNAKE:
                 playerPosition = snake(diceRollResult);
                 console.log("found snake ");
                 console.log("updated player positon- " + playerPosition);
@@ -52,8 +54,6 @@ main = () => {
     }
 }
 
-main();
-console.log("-----------------------------------------------------------");
-console.log();
-console.log("Player have won the game ");
+playGame();
+console.log("\nPlayer have won the game ");
 console.log("Number of dice rolls taken to win " + numberOfRolls);
