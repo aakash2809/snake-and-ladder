@@ -36,55 +36,51 @@ class Player {
     }
 }
 
+// Check and print who won the match 
+winCheck = () => {
+    (player1.playerPosition == player1.WIN_POSITION) ?
+        (console.log("Player1 won the game ")) : console.log("Player2 won the game ");
+}
+
+/**
+ * This function firstly decide player move 
+ * then decide for ladder() and snake() which one going  to execute 
+ * */
+decidePlyerMoveAndExecute = (optionToPlay) => {
+    (playerMove % 2 == 0) ? (player = player1) : (player = player2);
+    switch (optionToPlay) {
+        case NO_PLAY:
+            break;
+        case LADDER:
+            player.ladder(diceRollResult);
+            break;
+        case SNAKE:
+            player.snake(diceRollResult);
+            break;
+        default:
+            console.log("no match");
+    }
+}
+
 /**
  * PlayGame method initiate the game and execute the game
- * and at the end decide who won the game. 
  *loop will itterate till WIN_POSITION position
  * */
 playGame = () => {
     while (player1.playerPosition != player1.WIN_POSITION && player2.playerPosition != player2.WIN_POSITION) {
-        (playerMove % 2 == 0) ? (player = player1) : (player = player2);
-
         diceRollResult = (Math.floor(Math.random() * 10) % 6 + 1);
-        console.log("dice rolling result is- " + diceRollResult);
-
         optionToPlay = (Math.floor(Math.random() * 10) % 3);
-
-        switch (optionToPlay) {
-            case NO_PLAY:
-                console.log("no play");
-                console.log("updated " + player.playerName + " positon : " + player.playerPosition);
-                break;
-            case LADDER:
-                player.ladder(diceRollResult);
-                console.log("found ladder");
-                console.log("updated " + player.playerName + " positon : " + player.playerPosition);
-                break;
-            case SNAKE:
-                player.snake(diceRollResult);
-                console.log("found snake ");
-                console.log("updated " + player.playerName + " positon :  " + player.playerPosition);
-            default:
-                console.log("Option did not match");
-        }
+        decidePlyerMoveAndExecute(optionToPlay);
 
         numberOfRolls++;
         playerMove++;
     }
 
-    console.log("\n");
-
-    // Check who won the match 
-    if (player1.playerPosition == player1.WIN_POSITION) {
-        console.log("Player1 won the game ");
-    } else {
-        console.log("Player2 won the game ");
-    }
-
-    console.log("Number of dice rolls taken to win " + numberOfRolls);
+    winCheck();
+    console.log("Number of dice rolls taken to win : " + numberOfRolls);
 }
 
-console.log("welcome to Snake and Ladder Game");
+console.log("\nwelcome to Snake and Ladder Game");
 const player1 = new Player("player1", 0);
 const player2 = new Player("player2", 0);
 playGame();
